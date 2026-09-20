@@ -1,0 +1,9 @@
+NB05 VERDICT — Soft vs good reactor days
+============================================================
+Soft = removal_3320_3340 < 95.0%  (default)
+n_soft=226  n_good=879  total=1105
+Soft-day classifier: ROC-AUC=0.758, AUPRC=0.401 (chance≈0.178)
+SHAP top: sr_total_phosphorus_3320, sr_nitrogen_nitrate_plus_nitrite_3310, field_conductivity_3310, dioxane_3310, field_total_suspended_solids_3310
+Stable top-5: sr_total_phosphorus_3320 (5/5), dioxane_3310 (4/5), field_conductivity_3310 (4/5), sr_nitrogen_nitrate_plus_nitrite_3310 (4/5)
+Classifier excludes dioxane_3320, blend_ratio, sed_blend_gap.
+See nb05_KEY_FINDINGS.md for full tables.

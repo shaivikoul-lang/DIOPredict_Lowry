@@ -39,8 +39,12 @@ analysis/notebooks/
   01_chemistry_3310_3320_3340.ipynb    process chemistry pipeline
   02_16S_Fall2025.ipynb                16S microbial community pipeline
   03_integration_Fall2025.ipynb        join, explore, and model
+  04_chemistry_only_normalized_removal.ipynb   continuous % removal (chemistry)
+  05_soft_vs_good_days.ipynb           soft-day classifier + SHAP
+  06_chemistry_rf_vs_logistic.ipynb    chemistry RF vs logistic (same task)
 data/processed/
-  integrated_plant_by_date.csv         the merged analysis table
+  integrated_plant_by_date.csv         the merged nine-date analysis table
+  analysis_results/                    metrics, SHAP tables, and figures from 04–06
 ```
 
 ### The pipeline
@@ -58,6 +62,15 @@ computes Shannon diversity and richness per date and reactor.
 
 **03 — Integration.** Joins the two on sampling date, writes `integrated_plant_by_date.csv`, and
 runs exploratory correlation and random-forest analyses against removal.
+
+**04 — Chemistry-only regression.** Fits linear models of continuous reactor-stage removal
+(`removal_3320_3340`) on the long chemistry record with a temporal train/test split.
+
+**05 — Soft vs good days.** Classifies days with reactor-stage removal below 95% from upstream
+chemistry, with SHAP explanations and a threshold sweep. Blend-entangled features are excluded.
+
+**06 — Random forest vs logistic.** Same labels, features, and time split as notebook 05, comparing
+a chemistry-only random forest to logistic regression, with bootstrap CIs and TreeSHAP.
 
 ### The data file
 
@@ -97,7 +110,7 @@ than the nine-date microbial join, is where this dataset currently has the most 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install pandas numpy matplotlib seaborn openpyxl scikit-learn jupyter
+pip install pandas numpy matplotlib seaborn openpyxl scikit-learn shap jupyter
 ```
 
 Notebooks locate the project root by walking up until they find a `data/processed` directory, so
@@ -105,9 +118,8 @@ they should be run from within the repository.
 
 **Note on data availability.** Notebooks 01 and 02 read raw source files — the chemistry Excel
 workbooks and the 16S ASV table — that are **not included here**, as the underlying site data is
-confidential. Only the derived `integrated_plant_by_date.csv` is published. The two pipeline
-notebooks are included for methodological transparency and will not execute end-to-end without
-those raw inputs.
+confidential. Derived tables under `data/processed/` are published. Pipeline notebooks 01 and 02
+will not execute end-to-end without the raw inputs.
 
 ## Related work
 

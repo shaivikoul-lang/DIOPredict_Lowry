@@ -1,0 +1,29 @@
+NB06 VERDICT — Chemistry RF vs logistic (same task as 05 SHAP)
+======================================================================
+NOT the n=9 microbial RF (Notebook 03).
+
+Soft-day classification (test ≥2017):
+  logistic: AUC=0.758  AUPRC=0.401  bal_acc=0.686
+  random_forest: AUC=0.816  AUPRC=0.534  bal_acc=0.718
+
+Bootstrap 95% CI (train resample, fixed test):
+  logistic_test_AUC: 0.7445  [0.6170, 0.7984]
+  rf_test_AUC: 0.8048  [0.7596, 0.8397]
+  logit_coef_sr_total_phosphorus_3320: -0.4168  [-1.2044, -0.0275]  excludes0=True
+  logit_coef_temp_3320: -0.5569  [-0.9706, -0.2367]  excludes0=True
+  logit_coef_sr_nitrogen_nitrate_plus_nitrite_3310: -0.6511  [-1.7519, -0.1968]  excludes0=True
+  logit_coef_field_nitrogen_ammonia_3310: 0.1250  [-0.1691, 0.4914]  excludes0=False
+  logit_coef_sr_tetrahydrofuran_3320: -0.2591  [-0.6477, -0.0006]  excludes0=True
+
+Continuous Y3320 regression (same X/split):
+  ridge: R2_train=0.164  R2_test=0.029
+  lasso: R2_train=0.132  R2_test=-0.006
+  random_forest: R2_train=0.311  R2_test=0.130
+
+RF vs logistic SHAP (mean |SHAP| test ≥2017):
+  logistic top-5: sr_total_phosphorus_3320, sr_nitrogen_nitrate_plus_nitrite_3310, field_conductivity_3310, dioxane_3310, field_total_suspended_solids_3310
+  RF TreeSHAP top-5: sr_total_phosphorus_3320, dioxane_3310, temp_3320, sr_tetrahydrofuran_3320, sr_nitrogen_nitrate_plus_nitrite_3310
+  overlap: 3/5
+  phosphorus_3320 RF rank: 1
+
+Paper use: comparison table + CIs + RF TreeSHAP vs logistic SHAP.
